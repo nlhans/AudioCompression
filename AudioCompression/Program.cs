@@ -9,6 +9,7 @@ namespace AudioCompression
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
