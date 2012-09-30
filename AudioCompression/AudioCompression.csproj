@@ -34,17 +34,44 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\Binaries\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics.FSharp">
+      <HintPath>..\Binaries\MathNet.Numerics.FSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics.IO">
+      <HintPath>..\Binaries\MathNet.Numerics.IO.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Triton">
+      <HintPath>..\Binaries\Triton.dll</HintPath>
+    </Reference>
+    <Reference Include="Triton.Controls">
+      <HintPath>..\Binaries\Triton.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Triton.Database">
+      <HintPath>..\Binaries\Triton.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Triton.Joysticks">
+      <HintPath>..\Binaries\Triton.Joysticks.dll</HintPath>
+    </Reference>
+    <Reference Include="zlib.net">
+      <HintPath>..\Binaries\zlib.net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WaveReader.cs" />
+    <Compile Include="WaveStructs.cs" />
+    <Compile Include="WaveWriter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
