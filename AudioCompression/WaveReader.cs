@@ -78,9 +78,10 @@ namespace AudioCompression
         {
             ReadHeader(); // read header for good measure.
 
+            List<List<int>> Samples_t = new List<List<int>>();
             for (int d = 0, sample = 0; sample < Data.NumSamples; sample++)
             {
-                Samples.Add(new List<int>());
+                Samples_t.Add(new List<int>());
                 for (int channel = 0; channel < Fmt.Channels; channel++)
                 {
                     switch (Fmt.BitsPerSample)
@@ -96,10 +97,19 @@ namespace AudioCompression
                             break;
                     }
 
-                    Samples[sample].Add(d);
+                    Samples_t[sample].Add(d);
 
                 }
             }
+
+            // Shuffle lists around.
+            for (int c = 0; c < Fmt.Channels; c++)
+            {
+                Samples.Add(new List<int>());
+                for(int s = 0; s < Data.NumSamples; s++)
+                    Samples[c].Add(Samples_t[s][c]);
+            }
+
 
         }
 

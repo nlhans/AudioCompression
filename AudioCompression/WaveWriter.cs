@@ -96,9 +96,18 @@ namespace AudioCompression
             }
         }
 
-        public void WriteSamples(List<List<int>> samples)
+        public void WriteSamples(List<List<int>> samples_t)
         {
             WriteHeader();
+
+            List<List<int>> samples = new List<List<int>>();
+            //Shuffle back
+            for (int s = 0; s < samples_t[0].Count; s++)
+            {
+                samples.Add(new List<int>());
+                for (int c = 0; c < Fmt.Channels; c++)
+                    samples[s].Add(samples_t[c][s]);
+            }
 
             for (int sample = 0; sample < samples.Count; sample++)
             {
@@ -107,13 +116,13 @@ namespace AudioCompression
                     switch (Fmt.BitsPerSample)
                     {
                         case 8:
-                            writer.Write((byte)samples[sample][channel]);
+                            writer.Write((byte) samples[sample][channel]);
                             break;
                         case 16:
-                            writer.Write((ushort)samples[sample][channel]);
+                            writer.Write((ushort) samples[sample][channel]);
                             break;
                         case 32:
-                            writer.Write((uint)samples[sample][channel]);
+                            writer.Write((uint) samples[sample][channel]);
                             break;
                     }
 
@@ -121,10 +130,21 @@ namespace AudioCompression
                 }
             }
         }
-        public void WriteSamples(List<List<float>> samples)
+
+        public void WriteSamples(List<List<float>> samples_t)
         {
             // TODO: Test this function.
             WriteHeader();
+
+            List<List<float>> samples = new List<List<float>>();
+            //Shuffle back
+            for (int s = 0; s < samples_t[0].Count; s++)
+            {
+                samples.Add(new List<float>());
+                for (int c = 0; c < Fmt.Channels; c++)
+                    samples[s].Add(samples_t[c][s]);
+            }
+
 
             for (int sample = 0; sample < Data.NumSamples; sample++)
             {
@@ -133,6 +153,7 @@ namespace AudioCompression
                     writer.Write(samples[sample][channel]);
                     SamplesFlushed++;
                 }
+
             }
         }
 
