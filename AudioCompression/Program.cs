@@ -33,9 +33,10 @@ namespace AudioCompression
             read.ReadSamples();
             Console.WriteLine("OK");
             Console.Write("Writing samples...");
-            for(int s = 0; s < read.Samples.Count; s++)
+            for(int s = 0; s < read.SamplesCount; s++)
             {
-                read.Samples[s][0] /= 10;
+                read.Samples[0][s] /= 10;
+                read.Samples[1][s] /= 10;
             }
             write.WriteSamples(read.Samples);
             Console.WriteLine("OK");

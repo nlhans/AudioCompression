@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -24,6 +25,11 @@ namespace AudioCompression
             reader = new BinaryReader(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read));
 
             ReadHeader();
+        }
+
+        public uint SamplesCount
+        {
+            get { return (uint)this.Samples[0].Count; }
         }
 
         public void ReadHeader()
