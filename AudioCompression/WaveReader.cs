@@ -32,6 +32,11 @@ namespace AudioCompression
             get { return (uint)this.Samples[0].Count; }
         }
 
+        public uint Channels
+        {
+            get { return (uint)this.Samples.Count; }
+        }
+
         public void ReadHeader()
         {
             reader.BaseStream.Seek(0, SeekOrigin.Begin); // set to start
