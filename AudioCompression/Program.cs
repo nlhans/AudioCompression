@@ -11,7 +11,7 @@ namespace AudioCompression
 {
     public struct Constants
     {
-        public const int FFT_SIZE = 1024;
+        public const int FFT_SIZE = 2048*4;
         public const float AUDIO_SIZE = 65536.0f/2.0f;
     }
     public struct Spectrum
@@ -32,6 +32,14 @@ namespace AudioCompression
         public Spectrum(Complex[] data)
         {
             d = data;
+            for (int f = 0; f < d.Length; f++)
+            {
+                // Cut off at 16k, music doesn't utilize this anyway.
+                if (f > 16000/(44100/Constants.FFT_SIZE))
+                    d[f] = new Complex(0,0);
+                else
+                d[f] = new Complex(Math.Round(d[f].Real, 4),  Math.Round(d[f].Imaginary,3));
+            }
         }
 
     }
@@ -45,7 +53,7 @@ namespace AudioCompression
             try
             {
                 for (int s = 0; s < Samples.Count; s++)
-                    ComplexSamples.Add(new Complex(Convert.ToSingle(Samples[s]/2)/Constants.AUDIO_SIZE, 0.0f));
+                    ComplexSamples.Add(new Complex(Convert.ToSingle(Samples[s])/Constants.AUDIO_SIZE, 0.0f));
             }
             catch (Exception)
             {
@@ -108,7 +116,7 @@ namespace AudioCompression
     {
         static void Main(string[] args)
         {
-            WaveReader read = new WaveReader("sample.wav");
+            WaveReader read = new WaveReader("bleed.wav");
             Console.Write("Reading samples...");
             read.ReadSamples();
             Console.WriteLine("OK");
@@ -142,6 +150,7 @@ namespace AudioCompression
 
             for (int spectrum = 0; spectrum < Spectrums[0].Count; spectrum++)
             {
+                if (spectrum > 4*1024*1024/Constants.FFT_SIZE) break;// out of memory..
                 for(int channel =0 ; channel < Channels_Out.Count; channel++)
                 {
                     Complex[] data = Spectrums[channel][spectrum].ExportArray();
